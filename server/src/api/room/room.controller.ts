@@ -42,6 +42,6 @@ export class RoomController {
         const numPageSize = Number(pageSize) || 10;
         const room = await this.roomService.findAllMessageByRoomId(ctx.params.roomId, numPage, numPageSize)
         console.log(room);
-        ctx.body = { room: room };
+        ctx.body = { message: room };
     }
 }

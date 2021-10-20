@@ -70,8 +70,8 @@ SocketServer.on("connection", async (socket) => {
         const messageRepository = new MessageRepository();
         const clients = SocketServer.sockets.adapter.rooms.get(room);
         if (clients?.has(socketId)) {
-            0
-            SocketServer.to(room).emit('chat_message', msg);
+            console.log(room + "-" + name + "-" + msg)
+            SocketServer.to(room).emit('chat_message', name, msg);
             await messageRepository.createByMessage(name, room, createdAt(), msg)
         }
     });
