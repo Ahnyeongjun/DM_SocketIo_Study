@@ -6,11 +6,11 @@ const Item = ({ msg, name }) => {
         <>
             {name == localStorage.getItem('username') ? (
                 <S.text2>
-                    msg: {msg} name: {name}
+                    name: {name} msg: {msg}
                 </S.text2>
             ) : (
                 <S.text>
-                    msg: {msg} name: {name}
+                    name: {name} msg: {msg}
                 </S.text>
             )}
         </>

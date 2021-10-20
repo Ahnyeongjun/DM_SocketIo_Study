@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useMemo, useState } from 'react';
+import { InputWrapper } from '../auth/styles';
 import { socket } from '../main/MainPage';
 import Item from './Item';
 import * as S from './style';
@@ -33,8 +34,11 @@ const MainPage = ({ match }) => {
         }
     }, []);
 
-    const onUsernameSelection = () => {
-        socket.emit('chat_message2', socket.id, room, localStorage.getItem('username'), message);
+    const onClickSendbtn = () => {
+        if (message != '') {
+            setMessage('');
+            socket.emit('chat_message2', socket.id, room, localStorage.getItem('username'), message);
+        }
     };
 
     const onChangeMessage = (e: any) => {
@@ -46,14 +50,34 @@ const MainPage = ({ match }) => {
 
     return (
         <>
-            <S.Input1 value={message} onChange={onChangeMessage} placeholder={'message'}></S.Input1>
-            <S.Btn1 onClick={onUsernameSelection}>채팅 보내기</S.Btn1>
-
-            <S.Btn2>
-                {socketMessage.map((e) => (
-                    <Item key={a++} msg={e.msg} name={e.name}></Item>
-                ))}
-            </S.Btn2>
+            <S.Header />
+            <S.Chat>
+                <S.ContentWrapper>
+                    <S.leftWrapper>
+                        <S.TopWrapper />
+                        <S.Video />
+                    </S.leftWrapper>
+                    <S.RightWrapper>
+                        <S.Chatting>
+                            <S.ChatHeader />
+                            <S.ChatList>
+                                {socketMessage.map((e) => (
+                                    <Item key={a++} msg={e.msg} name={e.name}></Item>
+                                ))}
+                            </S.ChatList>
+                            <S.ChatWrapper>
+                                <S.ChatType>chatting</S.ChatType>
+                                <S.ChatInputWrapper>
+                                    <S.ChatInput value={message} onChange={onChangeMessage} placeholder={' message'} />
+                                </S.ChatInputWrapper>
+                                <S.ChatSendBtnWrapper>
+                                    <S.ChatSendBtn onClick={onClickSendbtn}>보내</S.ChatSendBtn>
+                                </S.ChatSendBtnWrapper>
+                            </S.ChatWrapper>
+                        </S.Chatting>
+                    </S.RightWrapper>
+                </S.ContentWrapper>
+            </S.Chat>
         </>
     );
 };
