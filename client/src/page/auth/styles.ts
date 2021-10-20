@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const LoginWrapper = styled.div`
     padding-top: 10px;

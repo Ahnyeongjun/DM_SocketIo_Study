@@ -5,7 +5,6 @@ height: 100px;
 width: 100px;
 `;
 export const Btn1 = styled.div`
-align-items: center;
 width: 100px;
 height: 100px;
 background: black;
