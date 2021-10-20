@@ -1,8 +1,20 @@
 import React from 'react';
-
-const Item = ({ num }) => {
-    console.log(num);
-    return <div>{num}</div>;
+import * as S from './style';
+const Item = ({ msg, name }) => {
+    console.log(msg);
+    return (
+        <>
+            {name == localStorage.getItem('username') ? (
+                <S.text2>
+                    msg: {msg} name: {name}
+                </S.text2>
+            ) : (
+                <S.text>
+                    msg: {msg} name: {name}
+                </S.text>
+            )}
+        </>
+    );
 };
 
 export default React.memo(Item);

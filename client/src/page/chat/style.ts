@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as S from './style';
 
 export const Input1 = styled.input`
 height: 100px;
@@ -17,3 +18,14 @@ width:500px;
 display: flex;
 flex-direction: column;
 height:500px;`;
+
+export const text = styled.div`
+width:auto;
+height: auto;
+`;
+export const text2 = styled.div`
+width:auto;
+height: auto;
+background: black;
+color:white;
+`;

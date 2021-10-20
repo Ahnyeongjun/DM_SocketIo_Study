@@ -9,18 +9,24 @@ socket.auth = { username: `${localStorage.getItem('username')}` };
 const MainPage = ({ match }) => {
     const { room } = match.params;
 
-    const [socketMessage, setSocketMessage] = useState(['3d342699-8eda-49a9-baec-410a4eef0111', '3d342699-8eda-49a9-baec-410a4eef0111']);
+    const [socketMessage, setSocketMessage] = useState([
+        { name: 'S', msg: 'S' },
+        { name: 'S', msg: 'S' },
+    ]);
     const [message, setMessage] = useState('');
     useMemo(async () => {
         socket.emit('joinRoom', room);
 
-        socket.on('chat_message', (msg) => {
-            setSocketMessage((prev) => [...prev, `${msg}`]);
+        socket.on('chat_message', (name: string, msg: string) => {
+            console.log(msg);
+            const messageContent = { name: name, msg: msg };
+            setSocketMessage((prev) => [...prev, messageContent]);
         });
         try {
             const res: any = await axios.get(`http://localhost:3000/api/room/${room}`);
-            res.data.room.forEach((e: any) => {
-                setSocketMessage((prev) => [...prev, `${e.msg}`]);
+            res.data.message.reverse().forEach((e: any) => {
+                const messageContent = { name: e.writer, msg: e.msg };
+                setSocketMessage((prev) => [...prev, messageContent]);
             });
         } catch (error) {
             console.error(error);
@@ -28,7 +34,7 @@ const MainPage = ({ match }) => {
     }, []);
 
     const onUsernameSelection = () => {
-        socket.emit('chat_message2', socket.id, room, 'Sssssssss', message);
+        socket.emit('chat_message2', socket.id, room, localStorage.getItem('username'), message);
     };
 
     const onChangeMessage = (e: any) => {
@@ -45,7 +51,7 @@ const MainPage = ({ match }) => {
 
             <S.Btn2>
                 {socketMessage.map((e) => (
-                    <Item key={a++} num={e}></Item>
+                    <Item key={a++} msg={e.msg} name={e.name}></Item>
                 ))}
             </S.Btn2>
         </>
