@@ -13,5 +13,9 @@ export class Message extends BaseEntity {
     roomId!: string;
 
     @Column()
+    msg!: string;
+
+    @Column()
     createdAt!: string;
+
 }

@@ -12,6 +12,7 @@ export const auth = (): Router => {
     //router.post('/first_register', authController.duplicatedById, authController.first_createUser);
     router.post('/login', authController.login);
     router.get('/check', authMiddleware, authController.check);
+
     router.get('/test', async (ctx: any) => {
         ctx.body = 'test';
     });

@@ -72,7 +72,7 @@ SocketServer.on("connection", async (socket) => {
         if (clients?.has(socketId)) {
             0
             SocketServer.to(room).emit('chat_message', msg);
-            await messageRepository.createByMessage(name, msg, createdAt())
+            await messageRepository.createByMessage(name, room, createdAt(), msg)
         }
     });
 });

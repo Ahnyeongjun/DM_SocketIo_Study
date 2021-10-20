@@ -9,7 +9,7 @@ export class RoomRepository {
             const room = new Room();
             room.name = name;
             room.creater = creater;
-            room.member = member;
+            room.member = member
             await (await connection).manager.save(room);
         } catch (e) {
             console.log(e);
@@ -29,4 +29,20 @@ export class RoomRepository {
         }
 
     }
+    public async findAllByUsername(username: string) {
+        try {
+            const roomRepository = (await connection).manager.getRepository(Room);
+
+            return await roomRepository.createQueryBuilder('room')
+                .leftJoinAndSelect('room.member', 'user')
+                .select(['room.uid', 'room.name', 'room.creater'])
+                .where('user.name = :name', { name: username })
+                .getMany();
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
 }
